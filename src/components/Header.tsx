@@ -3,7 +3,7 @@ import React from 'react';
 const Header: React.FC = () => {
   return (
     <header className="p-4 md:py-6 md:px-12 flex justify-between items-center">
-      <div className="text-2xl font-bold text-blue-600">StuWork</div>
+      <div className="text-2xl font-bold text-blue-600">uniempleos</div>
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-4">

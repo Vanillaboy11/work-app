@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
 
       {/* Mobile-Friendly Placeholder (Simple text or a separate mobile footer component) */}
       <div className="md:hidden text-center text-sm text-gray-500 pt-4">
-         © 2024 StuWork
+         © 2024 uniempleos. Todos los derechos reservados.
       </div>
     </footer>
   );
