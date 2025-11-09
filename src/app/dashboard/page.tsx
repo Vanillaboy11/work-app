@@ -74,10 +74,10 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Welcome to Your Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Bienvenido!!</h1>
         
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Featured Jobs</h2>
+          <h2 className="text-2xl font-semibold mb-4">Empleos Destacados</h2>
           <div className="space-y-6">
             <div className="flex justify-center space-x-4">
               <button
@@ -130,35 +130,35 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-2">My Applications</h3>
-            <p className="text-gray-600">Track your job applications</p>
+            <h3 className="text-lg font-semibold mb-2">Mis Aplicaciones</h3>
+            <p className="text-gray-600">Rastrea tus aplicaciones laborales</p>
             <button
               onClick={() => router.push('/applications')}
               className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
             >
-              View Applications
+              Ver Aplicaciones
             </button>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-2">Profile</h3>
-            <p className="text-gray-600">Update your information</p>
+            <h3 className="text-lg font-semibold mb-2">Perfil</h3>
+            <p className="text-gray-600">Actualiza tu información</p>
             <button
               onClick={() => router.push('/profile')}
               className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
             >
-              Edit Profile
+              Editar Perfil
             </button>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-2">Job Alerts</h3>
-            <p className="text-gray-600">Manage your job preferences</p>
+            <h3 className="text-lg font-semibold mb-2">Alertas de Empleo</h3>
+            <p className="text-gray-600">Gestiona tus preferencias laborales</p>
             <button
               onClick={() => router.push('/job-alerts')}
               className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
             >
-              Set Alerts
+              Configurar Alertas
             </button>
           </div>
         </div>

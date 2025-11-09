@@ -8,7 +8,7 @@ async function main() {
   const hashedPassword = await hash('employer123', 10);
   const employer = await prisma.user.create({
     data: {
-      email: 'employer@company.com',
+      email: 'employer@gmail.com',
       password: hashedPassword,
       name: 'Empresa Tecnológica SA',
       role: 'EMPLOYER',
