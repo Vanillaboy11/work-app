@@ -17,17 +17,34 @@ export const metadata: Metadata = {
   description: "By students, for students.",
 };
 
-export default function RootLayout({
+import { NextAuthProvider } from "@/providers/NextAuthProvider";
+import Header from "@/components/Header";
+import { getServerSession } from "next-auth";
+import AuthWrapper from "@/components/AuthWrapper";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
+  const isAuthPage = ['/login', '/register', '/', '/about'].some(path => 
+    typeof window !== 'undefined' && window.location.pathname === path
+  );
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}
       >
-        {children}
+        <NextAuthProvider>
+          <AuthWrapper>
+            {!isAuthPage && session && <Header />}
+            <main className={!isAuthPage && session ? "pt-16" : ""}>
+              {children}
+            </main>
+          </AuthWrapper>
+        </NextAuthProvider>
       </body>
     </html>
   );
