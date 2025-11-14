@@ -16,6 +16,10 @@ model User {
   email     String   @unique
   password  String
   name      String
+  age       Int?
+  phone     String?
+  location  String?
+  bio       String?  @db.Text
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -28,9 +32,19 @@ model Job {
   title       String
   company     String
   location    String
-  description String
+  description String   @db.Text
   salary      Float?
+  salaryMax   Float?
   type        JobType
+  workMode    WorkMode @default(ON_SITE)
+  contractType ContractType @default(FULL_TIME)
+  schedule    String?
+  requirements String?  @db.Text
+  benefits    String?  @db.Text
+  experienceLevel String?
+  department  String?
+  applicationDeadline DateTime?
+  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   createdBy   User     @relation("JobCreator", fields: [userId], references: [id])
@@ -61,6 +75,21 @@ enum JobType {
   CONTRACT
   INTERNSHIP
   REMOTE
+}
+
+enum WorkMode {
+  REMOTE
+  ON_SITE
+  HYBRID
+}
+
+enum ContractType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  TEMPORARY
+  FREELANCE
 }
 
 enum ApplicationStatus {

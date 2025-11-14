@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import JobCard from '@/components/JobCard';
 import CustomCarousel from '@/components/CustomCarousel';
 
@@ -22,6 +23,7 @@ interface CategorizedJobs {
 
 export default function Dashboard() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [jobs, setJobs] = useState<CategorizedJobs>({
     industrial: [],
     design: [],
@@ -31,18 +33,17 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<keyof CategorizedJobs>('industrial');
 
+  // Redirect if not authenticated
   useEffect(() => {
-    // Check authentication status
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/check');
-        if (!response.ok) {
-          router.push('/login');
-        }
-      } catch (error) {
-        router.push('/login');
-      }
-    };
+    if (status === 'loading') return; // Still loading session
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
+
+  useEffect(() => {
+    // Only fetch jobs if authenticated
+    if (status !== 'authenticated') return;
 
     // Fetch jobs
     const fetchJobs = async () => {
@@ -59,16 +60,21 @@ export default function Dashboard() {
       }
     };
 
-    checkAuth();
     fetchJobs();
-  }, [router]);
+  }, [status, router]);
 
-  if (loading) {
+  // Show loading while checking auth
+  if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
+  }
+
+  // Don't render anything if not authenticated (will redirect)
+  if (status !== 'authenticated') {
+    return null;
   }
 
   return (

@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Job } from '@prisma/client';
 
 interface JobCardProps {
@@ -6,14 +9,34 @@ interface JobCardProps {
     createdBy: {
       name: string;
     };
+    hasApplied?: boolean;
   };
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/jobs/${job.id}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 m-4 transition-transform hover:scale-105">
+    <div 
+      onClick={handleClick}
+      className="bg-white rounded-lg shadow-lg p-6 m-4 transition-transform hover:scale-105 cursor-pointer relative"
+    >
+      {job.hasApplied && (
+        <div className="absolute top-4 right-4">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-300">
+            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            Aplicado
+          </span>
+        </div>
+      )}
       <div className="flex justify-between items-start">
-        <div>
+        <div className="pr-20">
           <h3 className="text-xl font-bold text-gray-900 mb-2">{job.title}</h3>
           <p className="text-gray-600 text-sm mb-2">{job.company}</p>
         </div>
@@ -60,8 +83,12 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
           {job.description}
         </p>
 
-        <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
-          Ver Detalles
+        <button className={`w-full py-2 px-4 rounded-md transition-colors font-medium ${
+          job.hasApplied 
+            ? 'bg-green-100 text-green-800 border border-green-300 cursor-default'
+            : 'bg-blue-600 text-white hover:bg-blue-700'
+        }`}>
+          {job.hasApplied ? '✓ Ya aplicaste' : 'Ver Detalles'}
         </button>
       </div>
     </div>

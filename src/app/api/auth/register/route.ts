@@ -4,14 +4,25 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const { email, password, fullName } = await req.json();
+    const { email, password, fullName, age, phone, location, bio } = await req.json();
 
-    // Validate the data
+    // Validate required fields
     if (!email || !password || !fullName) {
       return NextResponse.json(
-        { error: "Todos los campos son requeridos" },
+        { error: "Todos los campos obligatorios son requeridos" },
         { status: 400 }
       );
+    }
+
+    // Validate age if provided
+    if (age !== undefined && age !== null) {
+      const ageNum = parseInt(age);
+      if (isNaN(ageNum) || ageNum < 18 || ageNum > 100) {
+        return NextResponse.json(
+          { error: "La edad debe estar entre 18 y 100 años" },
+          { status: 400 }
+        );
+      }
     }
 
     // Check if user already exists
@@ -37,7 +48,11 @@ export async function POST(req: Request) {
         email,
         name: fullName,
         password: hashedPassword,
-        role: "USER", // Default role
+        role: "USER",
+        age: age ? parseInt(age) : undefined,
+        phone: phone || undefined,
+        location: location || undefined,
+        bio: bio || undefined,
       },
     });
 
